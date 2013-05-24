@@ -84,15 +84,15 @@ echo ""
 pause "Press any key to start..."
 
 apt-get update
-apt-get dist-upgrade
+apt-get dist-upgrade -y
 
 # sysctl.conf
 sed -i 's/net.ipv4.ip_forward = 0/net.ipv4.ip_forward = 1/g' /etc/sysctl.conf
 sysctl -p
 
 # IPSec（StrongSwan）
-apt-get install wget
-apt-get install build-essential libcurl4-openssl-dev libgmp3-dev sqlite3 libsqlite3-dev
+apt-get install wget -y
+apt-get install build-essential libcurl4-openssl-dev libgmp3-dev sqlite3 libsqlite3-dev -y
 cd /home/lei/ && mkdir strongswan && cd strongswan
 wget http://download.strongswan.org/strongswan-5.0.4.tar.bz2
 tar jxvf strongswan-5.0.4.tar.bz2
