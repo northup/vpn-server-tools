@@ -451,8 +451,8 @@ logwtmp
 # or
 #localip 192.168.0.234-238,192.168.0.245
 #remoteip 192.168.1.234-238,192.168.1.245
-localip client_ip_root.3.1
-remoteip client_ip_root.3.2-254
+localip $client_ip_root.3.1
+remoteip $client_ip_root.3.2-254
 EOF
 
 rm -rf /etc/ppp/pptpd-options
