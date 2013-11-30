@@ -517,6 +517,9 @@ ipsec start
 
 exit 0
 EOF
+
+chmod 755 /etc/rc.local
+
 clear
 
 printf "
