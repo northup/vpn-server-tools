@@ -503,7 +503,7 @@ cat >>/etc/rc.local<<EOF
 #
 # By default this script does nothing.
 
-iptables -t nat -A POSTROUTING -s 10.10.0.0/255.255.0.0 -o eth0 -j MASQUERADE
+iptables -t nat -A POSTROUTING -s $client_ip_root.0.0/255.255.0.0 -o eth0 -j MASQUERADE
 
 for each in /proc/sys/net/ipv4/conf/*
 do
