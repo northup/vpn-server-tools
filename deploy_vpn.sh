@@ -28,7 +28,7 @@ on ubuntu 12.04.
 
 Make sure the user path /home/lei exists.
 "
-server_ip=`hostname -i`
+server_ip=`curl -s http://ipecho.net/plain`
 
 client_ip_root="10.10"
 echo "Please input Client IP range root:"
