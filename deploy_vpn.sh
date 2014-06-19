@@ -62,7 +62,7 @@ clear
 
 echo ""
 echo "Server IP: $server_ip"
-echo "Radius Server: $server_ip"
+echo "Radius Server: $radius_server"
 echo ""
 echo "-- IPSec information -----------------------"
 echo "Server Local IP: $client_ip_root.1.1"
