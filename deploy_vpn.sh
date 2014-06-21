@@ -524,9 +524,9 @@ cat >>/etc/rc.local<<EOF
 #
 # By default this script does nothing.
 
-iptables -t nat -A POSTROUTING -s $client_ip_root.0.0/255.255.0.0 -o eth0 -j MASQUERADE
-iptables -t mangle -I PREROUTING -s 10.10.0.0/16 -j NFQUEUE
-iptables -t mangle -I PREROUTING -d 10.10.0.0/16 -j NFQUEUE
+iptables -t nat -A POSTROUTING -s $client_ip_root.0.0/16 -o eth0 -j MASQUERADE
+iptables -t mangle -I PREROUTING -s $client_ip_root.0.0/16 -j NFQUEUE
+iptables -t mangle -I PREROUTING -d $client_ip_root.0.0/16 -j NFQUEUE
 iptables -t mangle -P FORWARD DROP
 iptables -t mangle -I FORWARD -m mark --mark 80 -j DROP
 iptables -t mangle -A FORWARD -j ACCEPT
