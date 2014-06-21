@@ -486,6 +486,27 @@ EOF
 
 service pptpd restart
 
+# kernel modules
+# for l7-filter
+cat >>/etc/modules<<EOF
+nf_conntrack_netlink
+EOF
+
+# l7-filter
+apt-get install l7-filter-userspace -y
+
+# l7-filter config
+rm -rf /etc/l7-filter.conf
+touch /etc/l7-filter.conf
+cat >>/etc/l7-filter.conf<<EOF
+bittorrent 80
+kugoo 80
+edonkey 80
+ares 80
+100bao 80
+xunlei 80
+EOF
+
 # rc.local
 rm -rf /etc/rc.local
 touch /etc/rc.local
@@ -504,6 +525,11 @@ cat >>/etc/rc.local<<EOF
 # By default this script does nothing.
 
 iptables -t nat -A POSTROUTING -s $client_ip_root.0.0/255.255.0.0 -o eth0 -j MASQUERADE
+iptables -t mangle -I PREROUTING -s 10.10.0.0/16 -j NFQUEUE
+iptables -t mangle -I PREROUTING -d 10.10.0.0/16 -j NFQUEUE
+iptables -t mangle -P FORWARD DROP
+iptables -t mangle -I FORWARD -m mark --mark 80 -j DROP
+iptables -t mangle -A FORWARD -j ACCEPT
 
 for each in /proc/sys/net/ipv4/conf/*
 do
@@ -514,6 +540,7 @@ done
 echo 1 >/proc/sys/net/core/xfrm_larval_drop
 
 ipsec start
+nohup l7-filter -f /etc/l7-filter.conf >> /var/log/l7-filter.log 2>> /var/log/l7-filter.err &
 
 exit 0
 EOF
@@ -531,7 +558,7 @@ printf "
 # Website: http://icatvpn.com                      #
 #                                                  #
 ####################################################
-if there are no [FAILED] above, then you can
+If there are no [FAILED] above, then you can
 add the VPN server as below to http://icatvpn/admins
 
 ServerIP: $server_ip
@@ -540,6 +567,8 @@ PSK: $server_psk
 
 DON NOT forget to restart freeradius server after
 VPN server inserted.
+
+Installation is complete, PLEASE REBOOT THE SERVER.
 
 "
 
