@@ -3,8 +3,8 @@ function pause(){
   read -n 1 -p "$*" INP  
   if [[ $INP != '' ]] ; then  
     echo -ne '\b \n'  
-  fi  
-} 
+  fi
+}
 
 if [ $(id -u) != "0" ]; then
   printf "Error: You must be root to run this tool!\n"
@@ -29,35 +29,31 @@ on ubuntu 12.04.
 Make sure the user path /home/lei exists.
 "
 server_ip=`curl -s http://ipecho.net/plain`
+while [ "$server_ip" = "" ]; do
+  read -p "Please input this server's ip:" server_ip
+done
 
 client_ip_root="10.10"
-echo "Please input Client IP range root:"
+echo "Please input client ip range prefix:"
 read -p "(Default: 10.10):" client_ip_root
 if [ "$client_ip_root" = "" ]; then
   client_ip_root="10.10"
 fi
 
-server_psk="icatvpn7320"
-echo "Please input PSK:"
-read -p "(Default: icatvpn7320):" server_psk
-if [ "$server_psk" = "" ]; then
-  server_psk="icatvpn7320"
-fi
+server_psk=""
+while [ "$server_psk" = "" ]; do
+  read -p "Please input PSK:" server_psk
+done
 
-radius_server="50.116.40.42"
-echo "Please input Radius Server:"
-read -p "(Default: 50.116.40.42):" radius_server
-if [ "$radius_server" = "" ]; then
-  radius_server="50.116.40.42"
-fi
-clear
+radius_server=""
+while [ "$radius_server" = "" ]; do
+  read -p "Please input radius server's ip:" radius_server
+done
 
-radius_secret="nassecret001"
-echo "Please input Radius Secret:"
-read -p "(Default: nassecret001):" radius_secret
-if [ "$radius_secret" = "" ]; then
-  radius_secret="nassecret001"
-fi
+radius_secret=""
+while [ "$radius_secret" = "" ]; do
+  read -p "Please input radius secret:" radius_secret
+done
 clear
 
 echo ""
